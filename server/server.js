@@ -7,7 +7,8 @@ const connectDB = require('./config/db');
 dotenv.config();
 
 // Connect to Database
-connectDB();
+// Connect to Database logic moved to startServer function
+// connectDB();
 
 const app = express();
 
@@ -44,6 +45,17 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// Connect to Database and Start Server
+const startServer = async () => {
+    try {
+        await connectDB();
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    } catch (err) {
+        console.error('Failed to connect to DB:', err);
+        process.exit(1);
+    }
+};
+
+startServer();
