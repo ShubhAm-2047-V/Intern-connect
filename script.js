@@ -738,6 +738,42 @@ async function loadDashboard() {
             appContainer.appendChild(div);
         });
 
+        // --- Fetch & Display Recommended Internships ---
+        const recommendedContainer = document.getElementById('recommended-container');
+        if (recommendedContainer) {
+            try {
+                const resRec = await fetch(`${API_URL}/student/internships`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const recommendations = await resRec.json();
+
+                // Show top 3 verified internships
+                const toShow = recommendations.slice(0, 3);
+
+                if (toShow.length === 0) {
+                    recommendedContainer.innerHTML = '<p style="text-align:center; color:#888;">No recommended opportunities at the moment.</p>';
+                } else {
+                    recommendedContainer.innerHTML = toShow.map(job => `
+                        <div class="job-card">
+                            <div>
+                                <h4 style="margin-bottom: 5px;">${job.title} 
+                                    ${job.verified ? '<i class="fas fa-check-circle" style="color: var(--accent-green); font-size: 0.8rem;" title="Verified"></i>' : ''}
+                                </h4>
+                                <p style="font-size: 0.9rem;">${job.company?.name || 'Unknown Company'} &bull; ${job.stipend || 'Unpaid'}</p>
+                                <div style="margin-top: 5px;">
+                                    ${job.skillsRequired.slice(0, 3).map(s => `<span class="skill-tag">${s}</span>`).join('')}
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" onclick="apply('${job._id}')">Apply Now</button>
+                        </div>
+                    `).join('');
+                }
+            } catch (recErr) {
+                console.error('Error fetching recommendations', recErr);
+                recommendedContainer.innerHTML = '<p style="color:red; text-align:center;">Failed to load recommendations.</p>';
+            }
+        }
+
         // Brief delay to allow DOM paint before observing
         setTimeout(() => {
             const observer = new IntersectionObserver((entries) => {
