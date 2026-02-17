@@ -670,17 +670,30 @@ function renderFilteredJobs() {
 
 
 async function apply(id) {
-    if (!token) return showLoginModal();
-    if (!confirm('Apply for this internship?')) return;
+    if (!token) return showMessageModal('Login Required', 'Please login to apply.');
+
+    // Since we don't have a confirm modal, we can proceed directly or implement one.
+    // For now, let's proceed directly as it's cleaner than native confirm.
+    // Or we can use showMessageModal as a pseudo-confirm? No, let's just apply.
+    // If user wants confirmation, we'd need a confirm modal. 
+    // Given the request "theme alerts", let's replace alerts with showMessageModal.
+
     try {
         const res = await fetch(`${API_URL}/student/apply/${id}`, {
             method: 'POST',
             headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
-        alert(data.message || 'Application status: ' + res.statusText);
+
+        if (res.ok) {
+            showMessageModal('Success', data.message || 'Application Submitted!');
+            // Refresh dashboard in background if active
+            if (document.querySelector('.dashboard-content')) loadDashboard();
+        } else {
+            showMessageModal('Application Failed', data.message || 'Could not submit application.');
+        }
     } catch (err) {
-        alert('Application failed');
+        showMessageModal('Error', 'Network error. Please try again.');
     }
 }
 

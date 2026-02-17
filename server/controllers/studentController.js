@@ -86,7 +86,13 @@ const applyInternship = async (req, res) => {
         const internshipId = req.params.id;
         const studentId = req.user.id;
 
-        // Check if already applied
+        // Check if student is already in an internship (ACTIVE)
+        const activeInternship = await Application.findOne({ student: studentId, status: 'Accepted' });
+        if (activeInternship) {
+            return res.status(400).json({ message: 'You are in a internship complete it first' });
+        }
+
+        // Check if already applied to THIS internship
         const existingApplication = await Application.findOne({ student: studentId, internship: internshipId });
         if (existingApplication) {
             return res.status(400).json({ message: 'Already applied to this internship' });
