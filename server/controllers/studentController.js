@@ -2,6 +2,8 @@ const StudentProfile = require('../models/StudentProfile');
 const Internship = require('../models/Internship');
 const Application = require('../models/Application');
 
+const CompanyProfile = require('../models/CompanyProfile');
+
 // @desc    Get current student profile
 // @route   GET /api/student/profile
 // @access  Private (Student)
@@ -56,9 +58,22 @@ const updateProfile = async (req, res) => {
 const getInternships = async (req, res) => {
     try {
         // Only show verified internships
-        const internships = await Internship.find({ verified: true }).populate('company', 'name email');
+        let internships = await Internship.find({ verified: true }).populate('company', 'name email').lean();
+
+        // Fetch real company names
+        internships = await Promise.all(internships.map(async (internship) => {
+            if (internship.company) {
+                const companyProfile = await CompanyProfile.findOne({ user: internship.company._id });
+                if (companyProfile && companyProfile.companyName) {
+                    internship.company.name = companyProfile.companyName;
+                }
+            }
+            return internship;
+        }));
+
         res.json(internships);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Server Error' });
     }
 };
@@ -93,12 +108,25 @@ const applyInternship = async (req, res) => {
 // @access  Private (Student)
 const getApplications = async (req, res) => {
     try {
-        const applications = await Application.find({ student: req.user.id })
+        let applications = await Application.find({ student: req.user.id })
             .populate({
                 path: 'internship',
                 select: 'title company', // Populating internship details
                 populate: { path: 'company', select: 'name' } // Nested populate for company name
-            });
+            })
+            .lean();
+
+        // Fetch real company names for applications
+        applications = await Promise.all(applications.map(async (app) => {
+            if (app.internship && app.internship.company) {
+                const companyProfile = await CompanyProfile.findOne({ user: app.internship.company._id });
+                if (companyProfile && companyProfile.companyName) {
+                    app.internship.company.name = companyProfile.companyName;
+                }
+            }
+            return app;
+        }));
+
         res.json(applications);
     } catch (error) {
         console.error(error);
