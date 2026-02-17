@@ -1,0 +1,41 @@
+[
+    {
+        "id": 1,
+        "title": "Frontend Developer Intern",
+        "company": "TechSolutions Inc.",
+        "location": "Remote",
+        "stipend": "$500/month",
+        "type": "Web Development",
+        "verified": true,
+        "skills": [
+            "React",
+            "CSS"
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Data Science Intern",
+        "company": "DataCorp",
+        "location": "New York",
+        "stipend": "$1200/month",
+        "type": "Data Science",
+        "verified": true,
+        "skills": [
+            "Python",
+            "SQL"
+        ]
+    },
+    {
+        "id": 3,
+        "title": "UX Design Intern",
+        "company": "CreativeAgency",
+        "location": "Remote",
+        "stipend": "Unpaid",
+        "type": "Design",
+        "verified": true,
+        "skills": [
+            "Figma",
+            "Prototyping"
+        ]
+    }
+]

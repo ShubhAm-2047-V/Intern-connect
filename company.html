@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Portal - InternConnect</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header></header>
+
+    <main>
+        <div class="container">
+            <div class="section-header"
+                style="margin-top: 40px; text-align: left; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h2>COMPANY DASHBOARD</h2>
+                    <p style="margin: 0; font-family: var(--font-mono);">MANAGE YOUR LISTINGS AND VIEW APPLICANTS.</p>
+                </div>
+                <div>
+                    <span class="verified-badge">
+                        <i class="fas fa-check-circle"></i> VERIFIED COMPANY
+                    </span>
+                    <button class="btn btn-outline" onclick="openCompanyProfileModal()"><i class="fas fa-edit"></i> Edit
+                        Profile</button>
+                    <button class="btn btn-primary" style="margin-left: 15px;"><i class="fas fa-plus"></i> POST NEW
+                        JOB</button>
+                </div>
+            </div>
+
+            <div class="dashboard-stats-grid">
+                <div class="dashboard-stat">
+                    <h3 style="color: var(--primary-lime);" id="stat-active-listings">0</h3>
+                    <p>ACTIVE LISTINGS</p>
+                </div>
+                <div class="dashboard-stat">
+                    <h3 style="color: var(--cyan);" id="stat-new-applicants">0</h3>
+                    <p>NEW APPLICANTS</p>
+                </div>
+                <div class="dashboard-stat">
+                    <h3 style="color: var(--hot-pink);" id="stat-closing-soon">0</h3>
+                    <p>ROLES CLOSING SOON</p>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <h3
+                    style="border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; font-family: var(--font-mono);">
+                    RECENT APPLICATIONS
+                </h3>
+
+                <div style="overflow-x: auto;">
+                    <table class="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>CANDIDATE</th>
+                                <th>ROLE</th>
+                                <th>DATE</th>
+                                <th>MATCH SCORE</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="display: flex; align-items: center; gap: 10px;">
+                                    <div class="user-avatar"><i class="fas fa-user"></i></div>
+                                    Sarah Johnson
+                                </td>
+                                <td>Frontend Intern</td>
+                                <td>Oct 24, 2024</td>
+                                <td><span style="color: var(--primary-lime); font-weight: 600;">95%</span></td>
+                                <td>
+                                    <button class="btn btn-outline"
+                                        style="padding: 5px 10px; font-size: 0.8rem;">VIEW</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="display: flex; align-items: center; gap: 10px;">
+                                    <div class="user-avatar"><i class="fas fa-user"></i></div>
+                                    Mike Chen
+                                </td>
+                                <td>Backend Intern</td>
+                                <td>Oct 23, 2024</td>
+                                <td><span style="color: #FFC107; font-weight: 600;">78%</span></td>
+                                <td>
+                                    <button class="btn btn-outline"
+                                        style="padding: 5px 10px; font-size: 0.8rem;">VIEW</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <!-- Edit Company Profile Modal -->
+    <div class="modal-overlay" id="companyProfileModal">
+        <div class="modal-content tilt-card">
+            <button class="close-modal" onclick="closeCompanyProfileModal()">&times;</button>
+            <h3 style="margin-bottom: 20px; text-align: center;">Edit Company Profile</h3>
+
+            <form id="editCompanyProfileForm" onsubmit="handleCompanyProfileUpdate(event)">
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" id="compName" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="compDesc" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Website</label>
+                    <input type="url" id="compWebsite">
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="compLocation">
+                </div>
+                <div class="form-group">
+                    <label>Documents (Format: Title | URL, one per line)</label>
+                    <textarea id="compDocs" rows="3"
+                        placeholder="Business License | http://example.com/license"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Save
+                    Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Application Modal -->
+    <div class="modal-overlay" id="applicationModal">
+        <div class="modal-content tilt-card">
+            <button class="close-modal" onclick="closeApplicationModal()">&times;</button>
+            <h3 style="margin-bottom: 20px; text-align: center;">Application Details</h3>
+
+            <div id="appModalContent">
+                <!-- Content injected via JS -->
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;" id="appModalActions">
+                <!-- Buttons injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Verification Modal (Admin) -->
+    <div class="modal-overlay" id="verificationModal">
+        <div class="modal-content tilt-card" style="max-width: 600px;">
+            <button class="close-modal" onclick="closeVerificationModal()">&times;</button>
+            <h3 style="margin-bottom: 20px; text-align: center; color: var(--primary-lime);">VERIFY COMPANY</h3>
+            <div id="verificationContent"></div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button id="verifyActionBtn" class="btn btn-primary" style="flex: 1;">APPROVE & VERIFY</button>
+            </div>
+        </div>
+    </div>
+
+    <footer></footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

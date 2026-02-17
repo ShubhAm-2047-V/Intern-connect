@@ -1,0 +1,9 @@
+# Helper files
+package-lock.json
+node_modules/
+.env
+dist/
+build/
+.DS_Store
+*.log
+*.msi

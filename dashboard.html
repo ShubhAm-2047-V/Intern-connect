@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - InternConnect</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Internal Styles Removed -> Moved to style.css -->
+</head>
+
+<body>
+    <header></header>
+
+    <main>
+        <div class="container">
+            <div class="dashboard-grid">
+                <!-- Sidebar Profile -->
+                <aside class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-img">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3>John Doe</h3>
+                        <p>Computer Science Student</p>
+                    </div>
+                    <hr style="margin: 15px 0; border: 0; border-top: 1px solid var(--border-color);">
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="font-size: 1rem; margin-bottom: 10px;">Skills</h4>
+                        <div class="skills-list">
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Python</span>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="font-size: 1rem; margin-bottom: 10px;">Interests</h4>
+                        <p style="font-size: 0.9rem;">Web Development, AI, Data Science</p>
+                    </div>
+                    <button class="btn btn-outline" style="width: 100%;" id="editProfileBtn"
+                        onclick="openEditProfileModal()">Edit Profile</button>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="dashboard-content">
+                    <!-- Application Status -->
+                    <div class="dashboard-section">
+                        <h2
+                            style="font-size: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px;">
+                            Detailed Application Status</h2>
+                        <div class="job-card">
+                            <div>
+                                <h4 style="margin-bottom: 5px;">Frontend Developer Intern</h4>
+                                <p style="font-size: 0.9rem;">TechSolutions Inc. &bull; Remote</p>
+                            </div>
+                            <span class="status-badge status-accepted">Interview Scbeduled</span>
+                        </div>
+                        <div class="job-card">
+                            <div>
+                                <h4 style="margin-bottom: 5px;">Data Science Intern</h4>
+                                <p style="font-size: 0.9rem;">DataCorp &bull; New York</p>
+                            </div>
+                            <span class="status-badge status-pending">Under Review</span>
+                        </div>
+                        <div class="job-card">
+                            <div>
+                                <h4 style="margin-bottom: 5px;">UX Design Intern</h4>
+                                <p style="font-size: 0.9rem;">CreativeAgency &bull; Remote</p>
+                            </div>
+                            <span class="status-badge status-rejected">Not Selected</span>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Opportunities -->
+                    <div class="dashboard-section">
+                        <h2
+                            style="font-size: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px;">
+                            Recommended for You</h2>
+                        <div class="job-card">
+                            <div>
+                                <h4 style="margin-bottom: 5px;">React Developer Intern <i class="fas fa-check-circle"
+                                        style="color: var(--accent-green); font-size: 0.8rem;" title="Verified"></i>
+                                </h4>
+                                <p style="font-size: 0.9rem;">WebWizards &bull; $500/mo</p>
+                                <div style="margin-top: 5px;">
+                                    <span class="skill-tag">React</span>
+                                    <span class="skill-tag">Node.js</span>
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-primary" onclick="alert('Application Sent!')">Apply Now</a>
+                        </div>
+                        <div class="job-card">
+                            <div>
+                                <h4 style="margin-bottom: 5px;">Python Backend Intern <i class="fas fa-check-circle"
+                                        style="color: var(--accent-green); font-size: 0.8rem;" title="Verified"></i>
+                                </h4>
+                                <p style="font-size: 0.9rem;">PySystems &bull; Unpaid (Credit)</p>
+                                <div style="margin-top: 5px;">
+                                    <span class="skill-tag">Python</span>
+                                    <span class="skill-tag">Django</span>
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-primary" onclick="alert('Application Sent!')">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="editProfileModal">
+        <div class="modal-content tilt-card">
+            <button class="close-modal" onclick="closeEditProfileModal()">&times;</button>
+            <h3 style="margin-bottom: 20px; text-align: center;">Edit Profile</h3>
+
+            <form id="editProfileForm" onsubmit="handleProfileUpdate(event)">
+                <div class="form-group">
+                    <label>Education</label>
+                    <input type="text" id="editEducation" placeholder="B.Sc Computer Science">
+                </div>
+                <div class="form-group">
+                    <label>Skills (comma separated)</label>
+                    <input type="text" id="editSkills" placeholder="React, Node.js, Python">
+                </div>
+                <div class="form-group">
+                    <label>Interests (comma separated)</label>
+                    <input type="text" id="editInterests" placeholder="Web Dev, AI, Cloud">
+                </div>
+                <div class="form-group">
+                    <label>Resume URL (Google Drive/Dropbox)</label>
+                    <input type="url" id="editResume" placeholder="https://drive.google.com/...">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Save
+                    Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <footer></footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

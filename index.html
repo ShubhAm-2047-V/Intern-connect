@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternConnect - Verified Internships & Projects</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header></header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" style="position: relative; overflow: hidden; padding: 100px 0;">
+            <!-- Animated Background Shapes -->
+            <div class="hero-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+            <div class="container" style="text-align: center; position: relative; z-index: 2;">
+                <h1 style="font-size: 4rem; margin-bottom: 20px; color: var(--text-main); line-height: 1;">
+                    CONNECTING STUDENTS WITH<br>
+                    <span class="gradient-text-flow">VERIFIED INTERNSHIPS</span>
+                </h1>
+                <p style="font-size: 1.2rem; max-width: 800px; margin: 0 auto 40px; font-family: var(--font-mono);">
+                    NO FAKE LISTINGS. JUST REAL OPPORTUNITIES.
+                </p>
+                <div style="display: flex; gap: 20px; justify-content: center;">
+                    <a href="dashboard.html" class="btn btn-primary" id="hero-student-btn">FOR STUDENTS</a>
+                    <a href="company.html" class="btn btn-secondary" id="hero-company-btn">FOR COMPANIES</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee Divider -->
+        <div class="marquee-container"
+            style="transform: rotate(-2deg); margin: -20px 0 50px 0; border: none; background: var(--hot-pink); color: white;">
+            <div class="marquee-content">
+                <span class="marquee-item">GET HIRED</span>
+                <span class="marquee-item">GET PAIO</span>
+                <span class="marquee-item">BUILD CAREER</span>
+                <span class="marquee-item">NO CAP</span>
+                <span class="marquee-item">GET HIRED</span>
+                <span class="marquee-item">GET PAIO</span>
+                <span class="marquee-item">BUILD CAREER</span>
+                <span class="marquee-item">NO CAP</span>
+            </div>
+        </div>
+
+        <!-- Highlights Section -->
+        <section class="highlights">
+            <div class="container">
+                <div class="section-header">
+                    <h2>WHY CHOOSE US?</h2>
+                    <p>WE PRIORITIZE YOUR CAREER GROWTH AND SAFETY.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    <div class="scroll-hidden animate-left job-card">
+                        <i class="fas fa-check-circle"
+                            style="font-size: 3rem; color: var(--primary-lime); margin-bottom: 20px;"></i>
+                        <h3>VERIFIED INTERNSHIPS</h3>
+                        <p>Every opportunity is vetted to ensure legitimacy and quality.</p>
+                    </div>
+                    <div class="scroll-hidden animate-zoom job-card">
+                        <i class="fas fa-brain" style="font-size: 3rem; color: var(--cyan); margin-bottom: 20px;"></i>
+                        <h3>SKILL-BASED MATCHING</h3>
+                        <p>Get recommendations based on your actual skills.</p>
+                    </div>
+                    <div class="scroll-hidden animate-right job-card">
+                        <i class="fas fa-shield-alt"
+                            style="font-size: 3rem; color: var(--hot-pink); margin-bottom: 20px;"></i>
+                        <h3>SCAM-FREE ZONE</h3>
+                        <p>We actively monitor and remove suspicious listings.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section
+            style="background: var(--primary-lime); color: black; text-align: center; border-top: 2px solid black; border-bottom: 2px solid black;">
+            <div class="container">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
+                    <div>
+                        <h2 style="color: black; font-size: 3rem; margin-bottom: 10px;">500+</h2>
+                        <p style="color: black; font-weight: bold; font-family: var(--font-mono);">VERIFIED COMPANIES
+                        </p>
+                    </div>
+                    <div>
+                        <h2 style="color: black; font-size: 3rem; margin-bottom: 10px;">10k+</h2>
+                        <p style="color: black; font-weight: bold; font-family: var(--font-mono);">STUDENTS PLACED</p>
+                    </div>
+                    <div>
+                        <h2 style="color: black; font-size: 3rem; margin-bottom: 10px;">98%</h2>
+                        <p style="color: black; font-weight: bold; font-family: var(--font-mono);">SATISFACTION RATE</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section style="text-align: center;">
+            <div class="container">
+                <h2 class="gradient-text-flow" style="font-size: 3rem;">HEADY TO START?</h2>
+                <p style="margin-bottom: 30px; font-family: var(--font-mono);">JOIN THOUSANDS OF STUDENTS BUILDING THE
+                    FUTURE.</p>
+                <a href="listings.html" class="btn btn-outline" style="font-size: 1.2rem;" id="home-cta-btn">BROWSE
+                    INTERNSHIPS</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Authentication Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-content tilt-card">
+            <button class="close-modal" onclick="closeAuthModal()">&times;</button>
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="switchAuthTab('login')">Login</button>
+                <button class="tab-btn" onclick="switchAuthTab('register')">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Login</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Full Name / Company Name</label>
+                    <input type="text" id="regName" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="regEmail" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" required placeholder="••••••••">
+                </div>
+
+                <div class="role-selection">
+                    <p style="margin-bottom: 10px; font-size: 0.9rem;">I want to:</p>
+                    <div class="role-options">
+                        <label class="role-option">
+                            <input type="radio" name="role" value="student" checked>
+                            <span class="role-box">
+                                <i class="fas fa-user-graduate"></i>
+                                Find Internships
+                            </span>
+                        </label>
+                        <label class="role-option">
+                            <input type="radio" name="role" value="company">
+                            <span class="role-box">
+                                <i class="fas fa-briefcase"></i>
+                                Hire Talent
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 15px;">
+                    <label style="font-size: 0.8rem; color: var(--text-light);">
+                        <input type="checkbox" required> I agree to the <a href="#">Terms & Conditions</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Create
+                    Account</button>
+            </form>
+        </div>
+    </div>
+
+    <footer></footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
