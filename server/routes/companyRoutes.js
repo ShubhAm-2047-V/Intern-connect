@@ -7,7 +7,8 @@ const {
     postInternship,
     getMyInternships,
     getJobApplications,
-    updateApplicationStatus
+    updateApplicationStatus,
+    getApplicationById
 } = require('../controllers/companyController');
 
 // All routes protected and for 'company' role
@@ -18,6 +19,6 @@ router.route('/profile').get(getProfile).post(updateProfile);
 router.route('/internship').post(postInternship);
 router.route('/internships').get(getMyInternships);
 router.route('/applications').get(getJobApplications);
-router.route('/application/:id').put(updateApplicationStatus);
+router.route('/application/:id').get(getApplicationById).put(updateApplicationStatus);
 
 module.exports = router;

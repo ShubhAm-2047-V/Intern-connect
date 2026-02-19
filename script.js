@@ -956,10 +956,16 @@ async function loadCompanyDashboard() {
         });
         const profile = await resProfile.json();
 
-        // Handle Badge Visibility
+        // Handle Badge Visibility & Title
         const verifiedBadge = document.querySelector('.verified-badge');
         if (verifiedBadge) {
             verifiedBadge.style.display = profile.verified ? 'inline-block' : 'none';
+        }
+
+        // Set Real Company Name in Title
+        const title = document.getElementById('company-dashboard-title');
+        if (title && profile.companyName) {
+            title.innerText = `${profile.companyName.toUpperCase()} DASHBOARD`;
         }
 
         // Fetch Applications
@@ -1033,6 +1039,54 @@ async function loadCompanyDashboard() {
 
     } catch (err) {
         console.error('Error loading company dashboard', err);
+    }
+}
+
+async function viewApplication(id) {
+    if (!token) return;
+    try {
+        const res = await fetch(`${API_URL}/company/application/${id}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (res.ok) {
+            const app = await res.json();
+            openApplicationModal(app);
+        } else {
+            const data = await res.json();
+            showMessageModal('Error', data.message || 'Failed to load application');
+        }
+    } catch (err) {
+        console.error(err);
+        showMessageModal('Error', 'Network error');
+    }
+}
+
+async function updateApp(id, status) {
+    if (!token) return;
+    try {
+        const res = await fetch(`${API_URL}/company/application/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            closeApplicationModal();
+            showMessageModal('Success', `Application ${status}`, () => {
+                loadCompanyDashboard();
+            });
+        } else {
+            showMessageModal('Error', data.message || 'Update failed');
+        }
+    } catch (err) {
+        console.error(err);
+        showMessageModal('Error', 'Network error');
     }
 }
 

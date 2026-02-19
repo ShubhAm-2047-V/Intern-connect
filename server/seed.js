@@ -26,7 +26,7 @@ const importData = async () => {
             const user = await User.create({
                 name: `Student ${i}`,
                 email: `student${i}@example.com`,
-                password: 'password123',
+                password: '123',
                 role: 'student'
             });
             await StudentProfile.create({
@@ -47,7 +47,7 @@ const importData = async () => {
             const user = await User.create({
                 name: companyNames[i],
                 email: `company${i + 1}@example.com`,
-                password: 'password123',
+                password: '123',
                 role: 'company'
             });
 
@@ -79,7 +79,7 @@ const importData = async () => {
         await User.create({
             name: 'Admin User',
             email: 'admin@example.com',
-            password: 'password123',
+            password: '123',
             role: 'admin'
         });
         console.log(`Created: admin@example.com / password123`);

@@ -167,11 +167,47 @@ const updateApplicationStatus = async (req, res) => {
     }
 };
 
+// @desc    Get single application by ID
+// @route   GET /api/company/application/:id
+// @access  Private (Company)
+const getApplicationById = async (req, res) => {
+    try {
+        const application = await Application.findById(req.params.id)
+            .populate('student', 'name email')
+            .populate('internship', 'title company')
+            .lean();
+
+        if (!application) {
+            return res.status(404).json({ message: 'Application not found' });
+        }
+
+        // Check authorization (Company must own the internship)
+        if (req.user.role !== 'admin' && application.internship.company.toString() !== req.user.id) {
+            return res.status(401).json({ message: 'Not authorized' });
+        }
+
+        // Fetch Student Profile
+        const StudentProfile = require('../models/StudentProfile');
+        const profile = await StudentProfile.findOne({ user: application.student._id });
+
+        const applicationWithProfile = {
+            ...application,
+            studentProfile: profile || { skills: [], education: 'N/A', interests: [] }
+        };
+
+        res.json(applicationWithProfile);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
 module.exports = {
     getProfile,
     updateProfile,
     postInternship,
     getMyInternships,
     getJobApplications,
-    updateApplicationStatus
+    updateApplicationStatus,
+    getApplicationById
 };
