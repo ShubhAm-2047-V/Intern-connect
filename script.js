@@ -989,7 +989,30 @@ async function loadCompanyDashboard() {
         const statApplicants = document.getElementById('stat-new-applicants');
         const statClosing = document.getElementById('stat-closing-soon');
 
+        if (statListings) statListings.innerText = activeListingsCount;
+        if (statApplicants) statApplicants.innerText = newApplicantsCount;
         if (statClosing) statClosing.innerText = closingSoonCount;
+
+        // Populate Active Listings
+        const listingsContainer = document.getElementById('company-listings-container');
+        if (listingsContainer) {
+            if (jobs.length > 0) {
+                listingsContainer.innerHTML = jobs.map(job => `
+                    <div class="job-card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="margin-bottom: 5px;">${job.title}</h4>
+                            <p style="font-size: 0.9rem;">${job.location} &bull; ${job.stipend}</p>
+                            <div style="margin-top: 5px;">
+                                ${job.skillsRequired.slice(0, 3).map(s => `<span class="skill-tag">${s}</span>`).join('')}
+                            </div>
+                        </div>
+                        <span class="status-badge" style="background: rgba(212, 255, 51, 0.1); color: var(--primary-lime); border: 1px solid var(--primary-lime);">ACTIVE</span>
+                    </div>
+                `).join('');
+            } else {
+                listingsContainer.innerHTML = '<p style="color: #888;">No active listings.</p>';
+            }
+        }
 
         // Populate Recent Applications Table
         const container = document.querySelector('.dashboard-table tbody');
