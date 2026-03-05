@@ -103,7 +103,13 @@ app.post('/api/contact', (req, res) => {
     res.status(201).json({ message: 'Message received!' });
 });
 
+app.use(express.static(__dirname));
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"));
+});
+
 // Start Server
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+app.listen(process.env.PORT || PORT, () => {
+    console.log(`Server running at http://localhost:${process.env.PORT || PORT}`);
 });
